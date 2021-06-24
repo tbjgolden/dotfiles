@@ -1,2 +1,2 @@
-alias dot="git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
-dot config status.showUntrackedFiles no
+alias hoy="git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
+hoy config status.showUntrackedFiles no
