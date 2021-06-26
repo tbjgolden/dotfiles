@@ -1,4 +1,4 @@
-BREW="jq direnv woff2 node yarn starship elvish"
+BREW="jq direnv woff2 node@14 yarn starship elvish"
 CASK="rectangle vscodium kitty firefox"
 
 for brew in $( echo $BREW | xargs ); do
