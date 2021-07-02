@@ -1,4 +1,4 @@
-BREW="jq direnv woff2 node@14 yarn zsh starship"
+BREW="jq direnv woff2 node yarn zsh starship"
 CASK="rectangle vscodium kitty firefox"
 
 for brew in $( echo $BREW | xargs ); do
@@ -10,3 +10,5 @@ for cask in $( echo $CASK | xargs ); do
   echo -e "\033[0;36m$cask\033[0m"
   brew install --cask $cask
 done
+
+direnv allow $HOME
