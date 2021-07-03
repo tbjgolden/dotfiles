@@ -11,4 +11,7 @@ plugins=(colored-man-pages command-not-found docker git npm pep8 pip pyenv pytho
 source $ZSH/oh-my-zsh.sh
 
 eval "$(direnv hook zsh)"
+
+source $HOME/.scripts/aliases.sh
+
 eval "$(starship init zsh)"
