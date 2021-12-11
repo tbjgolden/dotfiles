@@ -1,3 +1,3 @@
-# source $HOME/.scripts/setup.sh
-alias dot="git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
-dot config status.showUntrackedFiles no
+source $HOME/.scripts/aliases.sh
+fur config status.showUntrackedFiles no
+fur push --set-upstream origin darwin
