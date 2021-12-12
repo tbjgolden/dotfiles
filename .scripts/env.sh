@@ -15,7 +15,6 @@ alias grnb="git branch -m"
 alias gb="git branch | cat -n"
 
 # FUNCTIONS
-
 unalias gch
 gch() {
   N=$1
@@ -45,4 +44,5 @@ gdb() {
   fi
 }
 
-# 
+# VARIABLES
+# PATH="$PATH:"
