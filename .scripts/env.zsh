@@ -15,6 +15,7 @@ alias grnb="git branch -m"
 alias gb="git branch | cat -n"
 
 # FUNCTIONS
+alias gch="gch"
 unalias gch
 gch() {
   N=$1
@@ -29,6 +30,7 @@ gch() {
     git checkout $@
   fi
 }
+alias gdb="gdb"
 unalias gdb
 gdb() {
   N=$1
@@ -48,6 +50,6 @@ gdb() {
 # PATH="$PATH:"
 
 # CONDITIONAL VARIABLES
-if [ "$XDG_CURRENT_DESKTOP" == "KDE" ]; then
+if [ "$XDG_CURRENT_DESKTOP" = "KDE" ]; then
   export ELECTRON_TRASH=kioclient5
 fi

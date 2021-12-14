@@ -1,16 +1,17 @@
-source $HOME/.scripts/env.sh
+DIRNAME=`dirname ${BASH_SOURCE:-$0}`
 
-# if config not set already
+source $DIRNAME/env.zsh
+
+# imperative git config
 git config --global user.name "Tom"
 git config --global user.email 8162045+tbjgolden@users.noreply.github.com
 git config --global pull.rebase false
-
 if [ "$XDG_CURRENT_DESKTOP" = "KDE" ]; then
   GIT_VERSION=`git --version | xargs`
   GIT_VERSION="${GIT_VERSION:12}"
   echo "$GIT_VERSION"
 
-  sh `dirname ${BASH_SOURCE:-$0}`/lib/semver.sh $GIT_VERSION 2.10.0
+  sh $DIRNAME/lib/semver.sh $GIT_VERSION 2.10.0
 
   local LAST_EXIT_CODE=$?
   if [[ $LAST_EXIT_CODE -lt 2 ]]; then
@@ -24,12 +25,11 @@ else
   git config --global credential.helper store
 fi
 
-exit 1
-
+# enable flags on bare repo
 fur config status.showUntrackedFiles no
-
-# if upstream not already set
 fur push --set-upstream origin main
+
+return
 
 # if pacman
 # should install and update development packages
