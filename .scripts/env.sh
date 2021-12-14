@@ -46,3 +46,8 @@ gdb() {
 
 # VARIABLES
 # PATH="$PATH:"
+
+# CONDITIONAL VARIABLES
+if [ "$XDG_CURRENT_DESKTOP" == "KDE" ]; then
+  export ELECTRON_TRASH=kioclient5
+fi
