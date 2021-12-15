@@ -5,6 +5,6 @@ plugins=(colored-man-pages command-not-found docker git npm pep8 pip pyenv pytho
 
 source $HOME/.scripts/functions.sh
 source $HOME/.scripts/aliases.sh
-source $HOME/.zsh-plugins/**/*.plugin.zsh
+source $HOME/.scripts/plugins/**/*.plugin.zsh
 
 eval "$(starship init zsh)"
