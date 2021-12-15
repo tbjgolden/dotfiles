@@ -27,7 +27,8 @@ fi
 
 # enable flags on bare repo
 fur config status.showUntrackedFiles no
-fur push --set-upstream origin main
+fur fetch https://github.com/tbjgolden/dotfiles.git &>/dev/null
+fur branch --set-upstream-to main &>/dev/null
 
 if [ `uname` = "Darwin" ]; then
   if ! (( $+commands[brew] )); then
