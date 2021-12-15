@@ -9,12 +9,11 @@ git config --global pull.rebase false
 if [ "$XDG_CURRENT_DESKTOP" = "KDE" ]; then
   GIT_VERSION=`git --version | xargs`
   GIT_VERSION="${GIT_VERSION:12}"
-  echo "$GIT_VERSION"
-
-  sh $DIRNAME/lib/semver.sh $GIT_VERSION 2.10.0
+  sh $DIRNAME/lib/semver.sh $GIT_VERSION 2.11.0
 
   local LAST_EXIT_CODE=$?
   if [[ $LAST_EXIT_CODE -lt 2 ]]; then
+    # if supports libsecret, use it
     git config --global credential.helper libsecret
   elif []; then
     git config --global credential.helper store
