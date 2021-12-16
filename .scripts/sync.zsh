@@ -45,11 +45,6 @@ if [ `uname` = "Darwin" ]; then
 
 
 
-
-
-
-
-
 elif (( $+commands[pacman] )); then
   PACMAN="git base-devel go jq woff2 nodejs yarn starship kitty firefox"
   AUR="vscodium-bin"
