@@ -53,3 +53,7 @@ gdb() {
 if [ "$XDG_CURRENT_DESKTOP" = "KDE" ]; then
   export ELECTRON_TRASH=kioclient5
 fi
+
+if [ `uname` = "Darwin" ]; then
+  export PATH="$PATH:/opt/homebrew/bin/"
+fi

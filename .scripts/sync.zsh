@@ -34,10 +34,25 @@ if [ `uname` = "Darwin" ]; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   fi
 
-  
+  BREW="golang jq woff2 node yarn starship"
+  CASK="kitty vscodium maccy homebrew/cask-versions/firefox-developer-edition"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 elif (( $+commands[pacman] )); then
-  PACMAN="git base-devel go jq woff2 nodejs yarn starship vscode kitty firefox"
-  AUR="direnv"
+  PACMAN="git base-devel go jq woff2 nodejs yarn starship kitty firefox"
+  AUR="vscodium-bin"
   for pacman in $( echo $PACMAN | xargs ); do
     echo -e "\033[0;36m$pacman\033[0m"
     sudo pacman -Syu --noconfirm $pacman
