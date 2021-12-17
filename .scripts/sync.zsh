@@ -1,6 +1,4 @@
-DIRNAME=`dirname ${BASH_SOURCE:-$0}`
-
-source $DIRNAME/env.zsh
+source $HOME/.scripts/env.zsh
 
 echo -e "\e[1m\e[31mConfiguring git\e[0m"
 git config --global user.name "Tom"
@@ -26,7 +24,7 @@ git config --global color.diff.whitespace "red reverse"
 if [ `uname` = "Linux" ]; then
   GIT_VERSION=`git --version | xargs`
   GIT_VERSION="${GIT_VERSION:12}"
-  sh $DIRNAME/lib/semver.sh $GIT_VERSION 2.11.0
+  sh $HOME/.scripts/lib/semver.sh $GIT_VERSION 2.11.0
 
   local LAST_EXIT_CODE=$?
   if [[ $LAST_EXIT_CODE -lt 2 ]]; then
@@ -73,9 +71,9 @@ if [ 1 = 0 ]; then
       # to keep and update the git repo instead of redownloading in full
       echo -e "\033[0;36m$aur\033[0m"
       PREV_CWD="$( pwd )"
-      rm -rf "$DIRNAME/.tmp"
-      mkdir -p "$DIRNAME/.tmp"
-      cd "$DIRNAME/.tmp"
+      rm -rf "$HOME/.scripts/.tmp"
+      mkdir -p "$HOME/.scripts/.tmp"
+      cd "$HOME/.scripts/.tmp"
       git clone "https://aur.archlinux.org/$aur.git"
       cd "$aur"
       makepkg
@@ -94,9 +92,9 @@ echo -e "\e[1m\e[31mUpdating config files\e[0m"
 
 # create tmp dir
 PREV_CWD="$( pwd )"
-rm -rf $DIRNAME/.tmp
-mkdir -p $DIRNAME/.tmp
-cd $DIRNAME/.tmp
+rm -rf $HOME/.scripts/.tmp
+mkdir -p $HOME/.scripts/.tmp
+cd $HOME/.scripts/.tmp
 # build into tmp dir
 cp -R ../../.dotfileSrc/all/ .
 if [ `uname` = "Darwin" ]; then
@@ -126,8 +124,13 @@ cp -Rn ./ ../../../
 IFS=$'\n'
 FILES=($( find . -type f -print0 | xargs -0 -I "{}" echo '"{}"' ))
 for file in $FILES; do
+  echo "=========================="
   SRCPATH=$( echo $file | xargs -I '{}' echo '"'{}'"' )
+  echo $SRCPATH
   DESTPATH=$( echo $file | xargs -I '{}' echo '"'../../.{}'"' )
+  echo $DESTPATH
+  return 69
+
   if ! cmp -s ${DESTPATH[2, -2]} ${SRCPATH[2, -2]}; then
     echo ""
     diff -u ${DESTPATH[2, -2]} ${SRCPATH[2, -2]} | diff-so-fancy | tail -n +4
