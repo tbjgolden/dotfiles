@@ -53,7 +53,8 @@ gdb() {
 updot() {
   fur add $HOME/.scripts $HOME/.dotfileSrc $HOME/README.md
   fur commit -m 'updot'
-  fur push --set-upstream origin main 
+  fur push --set-upstream origin main
+  source ~/.scripts/sync.zsh
 }
 
 # VARIABLES
