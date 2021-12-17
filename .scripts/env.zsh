@@ -1,6 +1,9 @@
 # ALIASES
 alias fur="git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
 
+alias ls="ls -halG"
+alias grep='grep --color=auto'
+
 alias pyg="pygmentize -g"
 
 alias ga="git add"
