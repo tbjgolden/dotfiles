@@ -42,50 +42,48 @@ fi
 fur config status.showUntrackedFiles no
 fur branch --set-upstream-to main &>/dev/null
 
-if [ 1 = 0 ]; then
-  echo -e "\e[1m\e[31mInstalling and updating packages\e[0m"
-  if [ `uname` = "Darwin" ]; then
-    if ! (( $+commands[brew] )); then
-      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    fi
-
-    BREW="golang jq woff2 node yarn starship diff-so-fancy"
-    CASK="kitty vscodium maccy homebrew/cask-versions/firefox-developer-edition"
-    for brew in $( echo $BREW | xargs ); do
-      echo -e "\033[0;36m$brew\033[0m"
-      brew install $brew
-    done
-    for cask in $( echo $CASK | xargs ); do
-      echo -e "\033[0;36m$cask\033[0m"
-      brew install --cask $cask
-    done
-  elif (( $+commands[pacman] )); then
-    PACMAN="git base-devel go jq woff2 nodejs yarn starship kitty firefox diff-so-fancy"
-    AUR="vscodium-bin"
-    for pacman in $( echo $PACMAN | xargs ); do
-      echo -e "\033[0;36m$pacman\033[0m"
-      sudo pacman -Syu --noconfirm $pacman
-    done
-    for aur in $( echo $AUR | xargs ); do
-      # this probably needs a rewrite
-      # to keep and update the git repo instead of redownloading in full
-      echo -e "\033[0;36m$aur\033[0m"
-      PREV_CWD="$( pwd )"
-      rm -rf "$HOME/.scripts/.tmp"
-      mkdir -p "$HOME/.scripts/.tmp"
-      cd "$HOME/.scripts/.tmp"
-      git clone "https://aur.archlinux.org/$aur.git"
-      cd "$aur"
-      makepkg
-      sudo pacman -U --noconfirm "$( node ../../lib/aur.js $aur )"
-      cd ../..
-      rm -rf .tmp
-      cd $PREV_CWD
-    done
-  else
-    echo "Unsupported OS; add install instructions and rerun"
-    return 1
+echo -e "\e[1m\e[31mInstalling and updating packages\e[0m"
+if [ `uname` = "Darwin" ]; then
+  if ! (( $+commands[brew] )); then
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   fi
+
+  BREW="golang jq woff2 node yarn starship diff-so-fancy"
+  CASK="kitty vscodium maccy homebrew/cask-versions/firefox-developer-edition"
+  for brew in $( echo $BREW | xargs ); do
+    echo -e "\033[0;36m$brew\033[0m"
+    brew install $brew
+  done
+  for cask in $( echo $CASK | xargs ); do
+    echo -e "\033[0;36m$cask\033[0m"
+    brew install --cask $cask
+  done
+elif (( $+commands[pacman] )); then
+  PACMAN="git base-devel go jq woff2 nodejs yarn starship kitty firefox diff-so-fancy"
+  AUR="vscodium-bin"
+  for pacman in $( echo $PACMAN | xargs ); do
+    echo -e "\033[0;36m$pacman\033[0m"
+    sudo pacman -Syu --noconfirm $pacman
+  done
+  for aur in $( echo $AUR | xargs ); do
+    # this probably needs a rewrite
+    # to keep and update the git repo instead of redownloading in full
+    echo -e "\033[0;36m$aur\033[0m"
+    PREV_CWD="$( pwd )"
+    rm -rf "$HOME/.scripts/.tmp"
+    mkdir -p "$HOME/.scripts/.tmp"
+    cd "$HOME/.scripts/.tmp"
+    git clone "https://aur.archlinux.org/$aur.git"
+    cd "$aur"
+    makepkg
+    sudo pacman -U --noconfirm "$( node ../../lib/aur.js $aur )"
+    cd ../..
+    rm -rf .tmp
+    cd $PREV_CWD
+  done
+else
+  echo "Unsupported OS; add install instructions and rerun"
+  return 1
 fi
 
 echo -e "\e[1m\e[31mUpdating config files\e[0m"
@@ -124,12 +122,8 @@ cp -Rn ./ $HOME
 IFS=$'\n'
 FILES=($( find . -type f -print0 | xargs -0 -I "{}" echo '"{}"' ))
 for file in $FILES; do
-  echo "=========================="
   SRCPATH=$( echo $file | xargs -I '{}' echo '"'{}'"' )
-  echo $SRCPATH
   DESTPATH=$( echo '"'${file[4,-1]} | xargs -I '{}' echo '"'$HOME/{}'"' )
-  echo $DESTPATH
-  return 69
 
   if ! cmp -s ${DESTPATH[2, -2]} ${SRCPATH[2, -2]}; then
     echo ""
