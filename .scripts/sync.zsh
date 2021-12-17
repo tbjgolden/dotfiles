@@ -167,3 +167,5 @@ IFS=$' \t\n'
 cd ..
 rm -rf .tmp
 cd $PREV_CWD
+source ~/.zshrc
+

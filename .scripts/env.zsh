@@ -14,6 +14,8 @@ alias gs="git status"
 alias grnb="git branch -m"
 alias gb="git branch | cat -n"
 
+alias dfs="zsh ~/.scripts/sync.zsh"
+
 # FUNCTIONS
 alias gch="gch"
 unalias gch
