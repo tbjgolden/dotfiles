@@ -119,7 +119,7 @@ for reference in $REFERENCES; do
 done
 IFS=$' \t\n'
 # replace references with files
-cp -Rn ./ ../../../
+cp -Rn ./ $HOME
 # find changed files and prompt user
 IFS=$'\n'
 FILES=($( find . -type f -print0 | xargs -0 -I "{}" echo '"{}"' ))
@@ -127,7 +127,7 @@ for file in $FILES; do
   echo "=========================="
   SRCPATH=$( echo $file | xargs -I '{}' echo '"'{}'"' )
   echo $SRCPATH
-  DESTPATH=$( echo $file | xargs -I '{}' echo '"'../../.{}'"' )
+  DESTPATH=$( echo '"'${file[4,-1]} | xargs -I '{}' echo '"'$HOME/{}'"' )
   echo $DESTPATH
   return 69
 
