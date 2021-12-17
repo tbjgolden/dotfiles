@@ -50,6 +50,11 @@ gdb() {
     git branch -D $@
   fi
 }
+updot() {
+  fur add $HOME/.scripts $HOME/.dotfileSrc $HOME/README.md
+  fur commit -m 'updot'
+  fur push --set-upstream origin main 
+}
 
 # VARIABLES
 # PATH="$PATH:"
