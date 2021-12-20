@@ -22,7 +22,6 @@ git config --global color.diff.new        "green bold"
 git config --global color.diff.whitespace "red reverse"
 
 if [ `uname` = "Linux" ]; then
-  echo `sudo ls` > /dev/null;
   GIT_VERSION=`git --version | xargs`
   GIT_VERSION="${GIT_VERSION:12}"
   sh $HOME/.scripts/lib/semver.sh $GIT_VERSION 2.11.0
@@ -60,6 +59,7 @@ if [ `uname` = "Darwin" ]; then
     brew install --cask $cask
   done
 elif (( $+commands[pacman] )); then
+  echo `sudo ls` > /dev/null;
   PACMAN="git base-devel go jq woff2 nodejs yarn starship kitty firefox diff-so-fancy"
   AUR="vscodium-bin"
   for pacman in $( echo $PACMAN | xargs ); do
