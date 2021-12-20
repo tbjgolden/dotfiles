@@ -77,7 +77,7 @@ elif (( $+commands[pacman] )); then
       git clone "https://aur.archlinux.org/$aur.git"
       cd "$aur"
       makepkg
-      sudo pacman -U --noconfirm --needed "$( node ../../lib/aur.js $aur )"
+      sudo pacman -U --noconfirm --needed "$( node $HOME/.scripts/lib/aur.js $aur )"
     fi
     cd $PREV_CWD
   done
