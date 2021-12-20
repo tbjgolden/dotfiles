@@ -22,6 +22,7 @@ git config --global color.diff.new        "green bold"
 git config --global color.diff.whitespace "red reverse"
 
 if [ `uname` = "Linux" ]; then
+  echo `sudo ls` > /dev/null;
   GIT_VERSION=`git --version | xargs`
   GIT_VERSION="${GIT_VERSION:12}"
   sh $HOME/.scripts/lib/semver.sh $GIT_VERSION 2.11.0
