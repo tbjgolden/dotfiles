@@ -64,6 +64,9 @@ updot() {
   updot_only
   source ~/.scripts/sync.zsh
 }
+syncdot() {
+  source ~/.scripts/sync.zsh
+}
 
 # VARIABLES
 # PATH="$PATH:"

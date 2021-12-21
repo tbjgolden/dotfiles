@@ -38,7 +38,7 @@ const green = str => `\x1b[32m${str}\x1b[0m`
     o[k] = new Set();
     return o;
   }, {});
-  
+
   const references = new Map()
 
   const scanDir = async (currPath, set) => {
@@ -53,7 +53,7 @@ const green = str => `\x1b[32m${str}\x1b[0m`
         promises.push(scanDir(path.join(currPath, item.name), set))
       }
     }
-    
+
     await Promise.all(promises)
   }
 
@@ -137,10 +137,10 @@ const green = str => `\x1b[32m${str}\x1b[0m`
 
         if (toFileText !== fromFileText) {
           console.log("Proposed changes to:", to)
-  
+
           const diffs = Diff.diffLines(toFileText, fromFileText)
           // Iterate the new lines
-          
+
           let str = ""
           for (const diff of diffs) {
             if (diff.added) {
@@ -175,7 +175,7 @@ const green = str => `\x1b[32m${str}\x1b[0m`
               const aType = a.added ? "a" : (a.removed ? "r" : "-")
               const bType = b.added ? "a" : (b.removed ? "r" : "-")
               const type = aType + bType
-              
+
               if (type === "-a" || type === "-r") {
                 str += a.value
               } else if (type === "a-") {
@@ -211,7 +211,7 @@ const green = str => `\x1b[32m${str}\x1b[0m`
             } catch (err) {}
             await fs.copyFile(filePath, to)
           }
-          
+
           if (choice !== "u") {
             const remoteResult = fs.readFile(from, 'utf8')
             const newResult = fs.readFile(to, 'utf8')
@@ -229,93 +229,7 @@ const green = str => `\x1b[32m${str}\x1b[0m`
   }))
 
   if (hasChanges) {
-    cp.execSync(`zsh -c 'alias fur="git --git-dir=$HOME/.dotfiles --work-tree=$HOME"; fur add $HOME/.scripts $HOME/.dotfileSrc $HOME/README.md; fur commit -m "updateDotfiles.js"; fur push --set-upstream origin main'`)
+    cp.execSync(`zsh -c 'git --git-dir=$HOME/.dotfiles --work-tree=$HOME add $HOME/.scripts $HOME/.dotfileSrc $HOME/README.md; git --git-dir=$HOME/.dotfiles --work-tree=$HOME commit -m "updateDotfiles.js"; git --git-dir=$HOME/.dotfiles --work-tree=$HOME push --set-upstream origin main'`)
   }
 })()
 
-/**
-
-
-
-# create tmp dir
-PREV_CWD="$( pwd )"
-rm -rf $HOME/.scripts/.tmp
-mkdir -p $HOME/.scripts/.tmp
-cd $HOME/.scripts/.tmp
-# build into tmp dir
-cp -R ../../.dotfileSrc/all/ .
-if [ `uname` = "Darwin" ]; then
-  cp -R ../../.dotfileSrc/darwin/ .
-elif [ `uname` = "Linux" ]; then
-  cp -R ../../.dotfileSrc/linux/ .
-  if (( $+commands[pacman] )); then
-    cp -R ../../.dotfileSrc/pacman/ .
-  else
-    echo "Unsupported Linux OS; add equivalent config to .dotfileSrc/pacman"
-  fi
-fi
-# replace references with actual files
-IFS=$'\n'
-REFERENCES=($( find . -type f -iregex '.*\.reference$' -print0 | xargs -0 -I "{}" echo '"{}"' ))
-for reference in $REFERENCES; do
-  refname=$reference:t
-  refname=${refname[1,-12]}
-  refdir=`dirname $reference`'"'
-  echo $refdir | xargs rm -rf
-  echo $refdir | xargs cp -R ../../.dotfileSrc/references/$refname/
-done
-IFS=$' \t\n'
-# replace references with files
-cp -Rn ./ $HOME
-# find changed files and prompt user
-IFS=$'\n'
-FILES=($( find . -type f -print0 | xargs -0 -I "{}" echo '"{}"' ))
-for file in $FILES; do
-  SRCPATH=$( echo $file | xargs -I '{}' echo '"'{}'"' )
-  DESTPATH=$( echo '"'${file[4,-1]} | xargs -I '{}' echo '"'$HOME/{}'"' )
-
-  if ! cmp -s ${DESTPATH[2, -2]} ${SRCPATH[2, -2]}; then
-    echo ""
-    diff -u ${DESTPATH[2, -2]} ${SRCPATH[2, -2]} | diff-so-fancy | tail -n +4
-    result=""
-    while [ "$result" != "U" -a "$result" != "u" -a "$result" != "K" -a "$result" != "k" -a "$result" != "M" -a "$result" != "m" ]; do
-      echo ""
-      vared -p '(U)pdate, (K)eep, (M)erge manually?: ' -c result
-    done
-
-    if [ "$result" = "U" -o "$result" = "u" ]; then
-      echo "Updating"
-      rm ${DESTPATH[2, -2]}
-      mv ${SRCPATH[2, -2]} ${DESTPATH[2, -2]}
-    elif [ "$result" = "K" -o "$result" = "k" ]; then
-      echo "Keeping"
-    else
-      echo "Manual merge"
-      echo "===v=== before ===v===" > ${DESTPATH[2, -2]}.tmp
-      cat ${DESTPATH[2, -2]} >> ${DESTPATH[2, -2]}.tmp
-      echo "===v=== update ===v===" >> ${DESTPATH[2, -2]}.tmp
-      cat ${SRCPATH[2, -2]} >> ${DESTPATH[2, -2]}.tmp
-      vim ${DESTPATH[2, -2]}.tmp
-
-      while grep -s "e ===v===" ${DESTPATH[2, -2]}.tmp &>/dev/null; do
-        echo ""
-        echo "Diff comments remain in the source code, must edit..."
-        sleep 3
-        vim ${DESTPATH[2, -2]}.tmp
-      done
-
-      echo "Manual merge completed"
-      rm ${DESTPATH[2, -2]}
-      mv ${DESTPATH[2, -2]}.tmp ${DESTPATH[2, -2]}
-      rm ${DESTPATH[2, -2]}.tmp
-    fi
-  fi
-done
-IFS=$' \t\n'
-# cleanup tmp dir
-cd ..
-rm -rf .tmp
-cd $PREV_CWD
-
-
-*/
