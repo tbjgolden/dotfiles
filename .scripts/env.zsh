@@ -56,7 +56,7 @@ gdb() {
   fi
 }
 updot_only() {
-  fur add $HOME/.scripts $HOME/.dotfileSrc $HOME/README.md
+  fur add $HOME/.scripts $HOME/README.md
   fur commit -m 'updot'
   fur push --set-upstream origin main
 }
