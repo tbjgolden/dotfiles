@@ -1,7 +1,12 @@
 # ALIASES
 alias fur="git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
 
-alias ls="ls -halG"
+if [ `uname` = "Darwin" ]; then
+  alias ls="ls -halG"
+else
+  alias ls="ls -hal --color=auto"
+fi
+
 alias grep='grep --color=auto'
 
 alias pyg="pygmentize -g"
