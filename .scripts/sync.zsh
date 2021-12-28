@@ -59,26 +59,26 @@ if [ `uname` = "Darwin" ]; then
     brew install --cask -q $cask
   done
 elif (( $+commands[pacman] )); then
-  PACMAN="git base-devel go jq woff2 nodejs yarn starship kitty firefox diff-so-fancy"
+  echo `sudo ls` > /dev/null;
+  PACMAN="git vim base-devel go jq woff2 nodejs yarn starship kitty firefox diff-so-fancy"
   AUR="vscodium-bin"
   for pacman in $( echo $PACMAN | xargs ); do
     echo -e "\033[0;36m$pacman\033[0m"
-    sudo pacman -Syu --noconfirm $pacman
+    sudo pacman -Syu --noconfirm --needed $pacman
   done
   for aur in $( echo $AUR | xargs ); do
     # this probably needs a rewrite
     # to keep and update the git repo instead of redownloading in full
     echo -e "\033[0;36m$aur\033[0m"
     PREV_CWD="$( pwd )"
-    rm -rf "$HOME/.scripts/.tmp"
-    mkdir -p "$HOME/.scripts/.tmp"
-    cd "$HOME/.scripts/.tmp"
-    git clone "https://aur.archlinux.org/$aur.git"
-    cd "$aur"
-    makepkg
-    sudo pacman -U --noconfirm "$( node ../../lib/aur.js $aur )"
-    cd ../..
-    rm -rf .tmp
+    mkdir -p "$HOME/.aurCache"
+    cd "$HOME/.aurCache"
+    if [ ! -d "$aur" ]; then
+      git clone "https://aur.archlinux.org/$aur.git"
+      cd "$aur"
+      makepkg
+      sudo pacman -U --noconfirm --needed "$( node $HOME/.scripts/lib/aur.js $aur )"
+    fi
     cd $PREV_CWD
   done
 else
@@ -87,85 +87,5 @@ else
 fi
 
 echo -e "\e[1m\e[31mUpdating config files\e[0m"
-
-# create tmp dir
-PREV_CWD="$( pwd )"
-rm -rf $HOME/.scripts/.tmp
-mkdir -p $HOME/.scripts/.tmp
-cd $HOME/.scripts/.tmp
-# build into tmp dir
-cp -R ../../.dotfileSrc/all/ .
-if [ `uname` = "Darwin" ]; then
-  cp -R ../../.dotfileSrc/darwin/ .
-elif [ `uname` = "Linux" ]; then
-  cp -R ../../.dotfileSrc/linux/ .
-  if (( $+commands[pacman] )); then
-    cp -R ../../.dotfileSrc/pacman/ .
-  else
-    echo "Unsupported Linux OS; add equivalent config to .dotfileSrc/pacman"
-  fi
-fi
-# replace references with actual files
-IFS=$'\n'
-REFERENCES=($( find . -type f -iregex '.*\.reference$' -print0 | xargs -0 -I "{}" echo '"{}"' ))
-for reference in $REFERENCES; do
-  refname=$reference:t
-  refname=${refname[1,-12]}
-  refdir=`dirname $reference`'"'
-  echo $refdir | xargs rm -rf
-  echo $refdir | xargs cp -R ../../.dotfileSrc/references/$refname/
-done
-IFS=$' \t\n'
-# replace references with files
-cp -Rn ./ $HOME
-# find changed files and prompt user
-IFS=$'\n'
-FILES=($( find . -type f -print0 | xargs -0 -I "{}" echo '"{}"' ))
-for file in $FILES; do
-  SRCPATH=$( echo $file | xargs -I '{}' echo '"'{}'"' )
-  DESTPATH=$( echo '"'${file[4,-1]} | xargs -I '{}' echo '"'$HOME/{}'"' )
-
-  if ! cmp -s ${DESTPATH[2, -2]} ${SRCPATH[2, -2]}; then
-    echo ""
-    diff -u ${DESTPATH[2, -2]} ${SRCPATH[2, -2]} | diff-so-fancy | tail -n +4
-    result=""
-    while [ "$result" != "U" -a "$result" != "u" -a "$result" != "K" -a "$result" != "k" -a "$result" != "M" -a "$result" != "m" ]; do
-      echo ""
-      vared -p '(U)pdate, (K)eep, (M)erge manually?: ' -c result
-    done
-
-    if [ "$result" = "U" -o "$result" = "u" ]; then
-      echo "Updating"
-      rm ${DESTPATH[2, -2]}
-      mv ${SRCPATH[2, -2]} ${DESTPATH[2, -2]}
-    elif [ "$result" = "K" -o "$result" = "k" ]; then
-      echo "Keeping"
-    else
-      echo "Manual merge"
-      echo "===v=== before ===v===" > ${DESTPATH[2, -2]}.tmp
-      cat ${DESTPATH[2, -2]} >> ${DESTPATH[2, -2]}.tmp
-      echo "===v=== update ===v===" >> ${DESTPATH[2, -2]}.tmp
-      cat ${SRCPATH[2, -2]} >> ${DESTPATH[2, -2]}.tmp
-      vim ${DESTPATH[2, -2]}.tmp
-
-      while grep -s "e ===v===" ${DESTPATH[2, -2]}.tmp &>/dev/null; do
-        echo ""
-        echo "Diff comments remain in the source code, must edit..."
-        sleep 3
-        vim ${DESTPATH[2, -2]}.tmp
-      done
-
-      echo "Manual merge completed"
-      rm ${DESTPATH[2, -2]}
-      mv ${DESTPATH[2, -2]}.tmp ${DESTPATH[2, -2]}
-      rm ${DESTPATH[2, -2]}.tmp
-    fi
-  fi
-done
-IFS=$' \t\n'
-# cleanup tmp dir
-cd ..
-rm -rf .tmp
-cd $PREV_CWD
-source ~/.zshrc
-
+node $HOME/.scripts/lib/updateDotfiles.js
+source $HOME/.zshrc

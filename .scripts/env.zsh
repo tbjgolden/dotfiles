@@ -1,7 +1,12 @@
 # ALIASES
 alias fur="git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
 
-alias ls="ls -halG"
+if [ `uname` = "Darwin" ]; then
+  alias ls="ls -halG"
+else
+  alias ls="ls -hal --color=auto"
+fi
+
 alias grep='grep --color=auto'
 
 alias pyg="pygmentize -g"
@@ -50,10 +55,16 @@ gdb() {
     git branch -D $@
   fi
 }
-updot() {
-  fur add $HOME/.scripts $HOME/.dotfileSrc $HOME/README.md
+updot_only() {
+  fur add $HOME/.scripts $HOME/README.md
   fur commit -m 'updot'
   fur push --set-upstream origin main
+}
+updot() {
+  updot_only
+  source ~/.scripts/sync.zsh
+}
+syncdot() {
   source ~/.scripts/sync.zsh
 }
 
