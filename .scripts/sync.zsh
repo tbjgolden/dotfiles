@@ -48,15 +48,15 @@ if [ `uname` = "Darwin" ]; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   fi
 
-  BREW="golang jq woff2 node yarn starship diff-so-fancy"
+  BREW="java golang jq woff2 node yarn starship diff-so-fancy"
   CASK="kitty vscodium maccy homebrew/cask-versions/firefox-developer-edition"
   for brew in $( echo $BREW | xargs ); do
     echo -e "\033[0;36m$brew\033[0m"
-    brew install $brew
+    brew install -q $brew
   done
   for cask in $( echo $CASK | xargs ); do
     echo -e "\033[0;36m$cask\033[0m"
-    brew install --cask $cask
+    brew install --cask -q $cask
   done
 elif (( $+commands[pacman] )); then
   echo `sudo ls` > /dev/null;
