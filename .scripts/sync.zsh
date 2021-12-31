@@ -60,7 +60,7 @@ if [ `uname` = "Darwin" ]; then
   done
 elif (( $+commands[pacman] )); then
   echo `sudo ls` > /dev/null;
-  PACMAN="git vim base-devel go jq woff2 nodejs yarn starship kitty firefox diff-so-fancy"
+  PACMAN="git vim zip base-devel go jq woff2 nodejs npm yarn starship kitty firefox diff-so-fancy"
   AUR="vscodium-bin"
   for pacman in $( echo $PACMAN | xargs ); do
     echo -e "\033[0;36m$pacman\033[0m"
