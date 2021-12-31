@@ -70,6 +70,7 @@ syncdot() {
 
 # VARIABLES
 # PATH="$PATH:"
+export PATH="$PATH:$( yarn global bin )"
 
 # CONDITIONAL VARIABLES
 if [ "$XDG_CURRENT_DESKTOP" = "KDE" ]; then
