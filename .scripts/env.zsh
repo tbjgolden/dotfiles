@@ -70,9 +70,12 @@ syncdot() {
 
 # VARIABLES
 # PATH="$PATH:"
-export PATH="$PATH:$( yarn global bin )"
 
 # CONDITIONAL VARIABLES
+if (( $+commands[yarn] )); then
+  export PATH="$PATH:$( yarn global bin )"
+fi
+
 if [ "$XDG_CURRENT_DESKTOP" = "KDE" ]; then
   export ELECTRON_TRASH=kioclient5
 fi

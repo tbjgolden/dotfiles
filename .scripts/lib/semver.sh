@@ -25,8 +25,8 @@ semver_compare() {
     return 3
   fi
 
-  local A=`semver_parse "$1"`
-  local B=`semver_parse "$2"`
+  A=`semver_parse "$1"`
+  B=`semver_parse "$2"`
   set $A $B
 
   if [ $1 -gt $6 ]; then

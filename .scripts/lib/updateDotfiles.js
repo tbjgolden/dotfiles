@@ -119,6 +119,7 @@ const green = str => `\x1b[32m${str}\x1b[0m`
         await fs.unlink(to)
       } catch (err) {}
       try {
+        cp.execSync(`mkdir -p "${path.join(to, '..')}"`)
         await fs.copyFile(from, to)
       } catch (err) {}
     } else {
@@ -131,6 +132,7 @@ const green = str => `\x1b[32m${str}\x1b[0m`
         try {
           await fs.unlink(to)
         } catch (err) {}
+        cp.execSync(`mkdir -p "${path.join(to, '..')}"`)
         await fs.copyFile(from, to)
       } else {
         const fromFileText = await fs.readFile(from, 'utf8')

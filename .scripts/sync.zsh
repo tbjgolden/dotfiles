@@ -81,6 +81,17 @@ elif (( $+commands[pacman] )); then
     fi
     cd $PREV_CWD
   done
+elif (( $+commands[apt] )); then
+  echo `sudo ls` > /dev/null;
+  sudo add-apt-repository -y ppa:aos1/diff-so-fancy
+  curl -fsSL https://deb.nodesource.com/setup_current.x | sudo -E bash -
+  sudo apt update
+  APT="git vim zip build-essential curl wget golang jq woff2 nodejs npm yarnpkg diff-so-fancy"
+  for apt in $( echo $APT | xargs ); do
+    echo -e "\033[0;36m$apt\033[0m"
+    sudo apt install -y $apt
+  done
+  echo `sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -y` > /dev/null;
 else
   echo "Unsupported OS; add install instructions and rerun"
   return 1
