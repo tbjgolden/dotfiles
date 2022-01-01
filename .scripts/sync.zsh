@@ -84,6 +84,7 @@ elif (( $+commands[pacman] )); then
 elif (( $+commands[apt] )); then
   echo `sudo ls` > /dev/null;
   sudo add-apt-repository -y ppa:aos1/diff-so-fancy
+  sudo add-apt-repository -y ppa:git-core/ppa
   curl -fsSL https://deb.nodesource.com/setup_current.x | sudo -E bash -
   sudo apt update
   APT="git vim zip build-essential curl wget golang jq woff2 nodejs npm yarnpkg diff-so-fancy"
