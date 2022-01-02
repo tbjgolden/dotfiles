@@ -68,6 +68,12 @@ syncdot() {
   source ~/.scripts/sync.zsh
 }
 
+# ZSH SET TITLE
+set_win_title() {
+  echo -ne "\033]0; zsh $PWD \007"
+}
+precmd_functions+=(set_win_title)
+
 # VARIABLES
 # PATH="$PATH:"
 
