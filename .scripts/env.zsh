@@ -81,7 +81,12 @@ if [ "$XDG_CURRENT_DESKTOP" = "KDE" ]; then
 fi
 
 if [ `uname` = "Darwin" ]; then
-  export PATH="$PATH:/opt/homebrew/bin/"
+  export PATH="$PATH:/opt/homebrew/bin"
   export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
   export JAVA_HOME=`/usr/libexec/java_home`
 fi
+
+if [[ -f "$HOME/.zshrc.local" ]]; then
+  source $HOME/.zshrc.local
+fi
+

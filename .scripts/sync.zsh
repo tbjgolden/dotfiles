@@ -48,8 +48,8 @@ if [ `uname` = "Darwin" ]; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   fi
 
-  BREW="java golang jq woff2 node yarn starship diff-so-fancy"
-  CASK="kitty vscodium maccy homebrew/cask-versions/firefox-developer-edition"
+  BREW="java golang jq woff2 node@16 yarn starship diff-so-fancy wget"
+  CASK="kitty vscodium maccy flutter homebrew/cask-versions/firefox-developer-edition"
   for brew in $( echo $BREW | xargs ); do
     echo -e "\033[0;36m$brew\033[0m"
     brew install -q $brew

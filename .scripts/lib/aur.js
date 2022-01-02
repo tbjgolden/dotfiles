@@ -1,7 +1,4 @@
-#!/usr/bin/env node
-
 // used to install aur packages
-
 if (process.argv.length < 3) process.exit(1);
 
 const path = require('path')
