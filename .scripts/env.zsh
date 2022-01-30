@@ -55,16 +55,7 @@ gdb() {
     git branch -D $@
   fi
 }
-updot_only() {
-  fur add $HOME/.scripts $HOME/README.md
-  fur commit -m 'updot'
-  fur push --set-upstream origin main
-}
-updot() {
-  updot_only
-  source ~/.scripts/sync.zsh
-}
-syncdot() {
+resource() {
   source ~/.scripts/sync.zsh
 }
 
