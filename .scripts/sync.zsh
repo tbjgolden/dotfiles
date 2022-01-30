@@ -90,7 +90,7 @@ elif (( $+commands[apt] )); then
   sudo add-apt-repository -y ppa:flatpak/stable
   curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
   sudo apt update
-  APT="git vim zip build-essential curl wget golang jq woff2 nodejs npm diff-so-fancy kitty snapd flatpak"
+  APT="git vim zip build-essential curl wget golang jq woff2 nodejs npm diff-so-fancy kitty libsecret-1-0 libsecret-1-dev snapd flatpak"
   for apt in $( echo $APT | xargs ); do
     echo -e "\033[0;36m$apt\033[0m"
     sudo apt install -y $apt
@@ -114,7 +114,17 @@ elif (( $+commands[apt] )); then
     sudo snap install $snapc --classic
   done
 
+  # starship
+  echo -e "\033[0;36mstarship\033[0m"
   echo `sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -y` > /dev/null;
+
+  # libsecret fix for ubuntu
+  echo -e "\e[1m\e[31mEnabling libsecret\e[0m"
+  PREV_CWD="$( pwd )"
+  cd /usr/share/doc/git/contrib/credential/libsecret
+  sudo make
+  git config --global credential.helper /usr/share/doc/git/contrib/credential/libsecret/git-credential-libsecret
+  cd $PREV_CWD
 else
   echo "Unsupported OS; add install instructions and rerun"
   return 1
