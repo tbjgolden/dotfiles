@@ -83,15 +83,37 @@ elif (( $+commands[pacman] )); then
   done
 elif (( $+commands[apt] )); then
   echo `sudo ls` > /dev/null;
+
+  # apt
   sudo add-apt-repository -y ppa:aos1/diff-so-fancy
   sudo add-apt-repository -y ppa:git-core/ppa
-  curl -fsSL https://deb.nodesource.com/setup_current.x | sudo -E bash -
+  sudo add-apt-repository -y ppa:flatpak/stable
+  curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
   sudo apt update
-  APT="git vim zip build-essential curl wget golang jq woff2 nodejs npm yarnpkg diff-so-fancy"
+  APT="git vim zip build-essential curl wget golang jq woff2 nodejs npm diff-so-fancy kitty snapd flatpak"
   for apt in $( echo $APT | xargs ); do
     echo -e "\033[0;36m$apt\033[0m"
     sudo apt install -y $apt
   done
+
+  echo -e "\033[0;36mnpm:yarn\033[0m"
+  sudo npm install --global yarn
+
+  # flatpak
+  flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+  # FLATPAK="com.vscodium.codium"
+  # for flatpak in $( echo $FLATPAK | xargs ); do
+    # echo -e "\033[0;36mflatpak:$flatpak\033[0m"
+    # flatpak install flathub $flatpak
+  # done
+
+  # snap
+  SNAPC="flutter codium"
+  for snapc in $( echo $SNAPC | xargs ); do
+    echo -e "\033[0;36msnap:$snapc\033[0m"
+    sudo snap install $snapc --classic
+  done
+
   echo `sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -y` > /dev/null;
 else
   echo "Unsupported OS; add install instructions and rerun"

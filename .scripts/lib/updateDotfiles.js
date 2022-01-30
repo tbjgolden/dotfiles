@@ -29,6 +29,8 @@ const green = str => `\x1b[32m${str}\x1b[0m`
   if (process.platform === 'linux') {
     if (hasBin("pacman")) {
       sections.push("pacman")
+    } else if (hasBin("apt")) {
+      sections.push("apt")
     }
   }
 
