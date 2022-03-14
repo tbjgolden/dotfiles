@@ -6,7 +6,7 @@
   "editor.detectIndentation": false,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[javascript]": {
-      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "editor.renderWhitespace": "all",
   "workbench.startupEditor": "none",
@@ -17,5 +17,6 @@
   "security.workspace.trust.untrustedFiles": "open",
   "git.enableSmartCommit": true,
   "git.confirmSync": false,
+  "editor.formatOnSave": true,
   "git.autofetch": true
 }
