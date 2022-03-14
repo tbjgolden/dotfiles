@@ -8,6 +8,4 @@ for plugin in $( echo $PLUGINS | xargs ); do
 done
 
 # check for updates
-
 eval "$(starship init zsh)"
-
