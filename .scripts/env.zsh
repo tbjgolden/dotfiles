@@ -55,8 +55,24 @@ gdb() {
     git branch -D $@
   fi
 }
+alias resource="resource"
+unalias resource
 resource() {
   source ~/.scripts/sync.zsh
+}
+alias conventional="conventional"
+unalias conventional
+conventional() {
+  echo "fix: A bug fix"
+  echo "feat: A new feature"
+  echo "build: Changes that affect the build system or external dependencies"
+  echo "chore: No production code change and not covered by another tag"
+  echo "ci: Changes to our CI configuration files and scripts"
+  echo "docs: Documentation only changes"
+  echo "style: Code-style changes (whitespace, prettier)"
+  echo "refactor: A code change that neither fixes a bug nor adds a feature"
+  echo "perf: A code change that improves performance"
+  echo "test: Adding missing tests or correcting existing tests"
 }
 
 # ZSH SET TITLE
