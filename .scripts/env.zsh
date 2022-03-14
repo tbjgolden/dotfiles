@@ -22,7 +22,8 @@ alias gs="git status"
 alias grnb="git branch -m"
 alias gb="git branch | cat -n"
 
-alias dfs="zsh ~/.scripts/sync.zsh"
+alias hs='history | grep'
+alias hsi='history | grep -i'
 
 # FUNCTIONS
 alias gch="gch"
@@ -56,7 +57,14 @@ gdb() {
   fi
 }
 resource() {
-  source ~/.scripts/sync.zsh
+  source ~/.scripts/env.zsh
+}
+updot() {
+  node $HOME/.scripts/lib/updateDotfiles.js
+  source ~/.scripts/env.zsh
+}
+find_big() {
+  du -a . | sort -n -r | head -n 40
 }
 
 # ZSH SET TITLE

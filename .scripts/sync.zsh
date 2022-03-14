@@ -29,7 +29,11 @@ if [ `uname` = "Linux" ]; then
   local LAST_EXIT_CODE=$?
   if [[ $LAST_EXIT_CODE -lt 2 ]]; then
     # if git supports libsecret, use it
-    git config --global credential.helper libsecret
+    if (( $+commands[apt] )); then
+      git config --global credential.helper /usr/share/doc/git/contrib/credential/libsecret/git-credential-libsecret
+    else
+      git config --global credential.helper libsecret
+    fi
   elif []; then
     git config --global credential.helper store
   fi
@@ -123,7 +127,6 @@ elif (( $+commands[apt] )); then
   PREV_CWD="$( pwd )"
   cd /usr/share/doc/git/contrib/credential/libsecret
   sudo make
-  git config --global credential.helper /usr/share/doc/git/contrib/credential/libsecret/git-credential-libsecret
   cd $PREV_CWD
 else
   echo "Unsupported OS; add install instructions and rerun"
