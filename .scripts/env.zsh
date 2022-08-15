@@ -104,7 +104,7 @@ fi
 if [ `uname` = "Darwin" ]; then
   export PATH="$PATH:/opt/homebrew/bin"
   export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
-  export JAVA_HOME=`/usr/libexec/java_home`
+  export JAVA_HOME=`which java`
 fi
 
 if [[ -f "$HOME/.zshrc.local" ]]; then
