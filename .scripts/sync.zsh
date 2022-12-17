@@ -1,8 +1,8 @@
 source $HOME/.scripts/env.zsh
 
 echo -e "\e[1m\e[31mConfiguring git\e[0m"
-git config --global user.name "Tom"
-git config --global user.email 8162045+tbjgolden@users.noreply.github.com
+git config --global user.name "Tom Golden"
+git config --global user.email oss@tom.bio
 git config --global pull.rebase false
 git config --global core.pager "diff-so-fancy | less --tabs=2 -RFX"
 git config --global interactive.diffFilter "diff-so-fancy --patch"
