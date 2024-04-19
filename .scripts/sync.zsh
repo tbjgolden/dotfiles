@@ -52,7 +52,7 @@ if [ `uname` = "Darwin" ]; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   fi
 
-  BREW="java golang jq woff2 node@16 yarn starship diff-so-fancy wget pygments"
+  BREW="jq woff2 node yarn starship diff-so-fancy wget"
   CASK="kitty vscodium maccy flutter homebrew/cask-versions/firefox-developer-edition"
   for brew in $( echo $BREW | xargs ); do
     echo -e "\033[0;36m$brew\033[0m"
@@ -94,7 +94,7 @@ elif (( $+commands[apt] )); then
   sudo add-apt-repository -y ppa:flatpak/stable
   curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
   sudo apt update
-  APT="git vim zip build-essential curl wget golang jq woff2 nodejs npm diff-so-fancy kitty libsecret-1-0 libsecret-1-dev snapd flatpak"
+  APT="git vim zip build-essential curl wget jq woff2 nodejs npm diff-so-fancy kitty libsecret-1-0 libsecret-1-dev snapd flatpak"
   for apt in $( echo $APT | xargs ); do
     echo -e "\033[0;36m$apt\033[0m"
     sudo apt install -y $apt

@@ -9,8 +9,6 @@ fi
 
 alias grep='grep --color=auto'
 
-alias pyg="pygmentize -g"
-
 alias ga="git add"
 alias gcl="git clone"
 alias gc="git commit"
