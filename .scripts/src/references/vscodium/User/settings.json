@@ -1,7 +1,5 @@
 {
-  "workbench.iconTheme": "Monokai Pro (Filter Spectrum) Icons",
-  "workbench.colorTheme": "Monokai Pro (Filter Spectrum)",
-  "tabnine.experimentalAutoImports": true,
+  "workbench.iconTheme": "material-icon-theme",
   "editor.tabSize": 2,
   "editor.detectIndentation": false,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -22,15 +20,6 @@
   "git.confirmSync": false,
   "editor.formatOnSave": true,
   "git.autofetch": true,
-  "svelte.enable-ts-plugin": true,
-  "duplicatedCode.exclude": [
-    "**/(node_modules|coverage|dist|build|vendor|storage|public|stubs|cypress|.*)/**",
-    "**/.*",
-    "**/_*",
-    "**/*lock*",
-    "**/LICENSE",
-    "**/*.json"
-  ],
   "files.associations": {
     "*.json5": "json5"
   },
@@ -42,5 +31,5 @@
   "terminal.external.osxExec": "kitty.app",
   "terminal.integrated.fontSize": 10,
   "update.showReleaseNotes": false,
-  "github.copilot.chat.localeOverride": "en"
+  "workbench.colorTheme": "GitHub Dark Default"
 }

@@ -7,6 +7,8 @@ for plugin in $( echo $PLUGINS | xargs ); do
   source $HOME/.scripts/plugins/$plugin/$plugin.plugin.zsh
 done
 
+alias nano='vim'
+
 # check for updates
 eval "$(starship init zsh)"
 
