@@ -1,9 +1,9 @@
 // used to install aur packages
 if (process.argv.length < 3) process.exit(1);
 
-const path = require('path')
-const os = require('os')
-const fs = require('fs/promises')
+const path = require('node:path')
+const os = require('node:os')
+const fs = require('node:fs/promises')
 
 ;(async () => {
   try {

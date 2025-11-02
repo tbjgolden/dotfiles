@@ -1,12 +1,12 @@
-const path = require('path')
-const fs = require('fs/promises')
-const os = require('os')
+const path = require('node:path')
+const fs = require('node:fs/promises')
+const os = require('node:os')
 const hasBin = require('./hasBin.js')
 const Diff = require('./diff.js')
 const { isText } = require('./isTextOrBinary.js')
-const readline = require('readline');
-const cp = require("child_process")
-const { stdin: input, stdout: output } = require('process');
+const readline = require('node:readline');
+const cp = require("node:child_process")
+const { stdin: input, stdout: output } = require('node:process');
 
 const prompt = (str) => {
   return new Promise((resolve, reject) => {
